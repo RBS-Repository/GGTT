@@ -4,14 +4,12 @@ const captureLinks = document.querySelectorAll('.link-box');
 const modal = document.getElementById('cameraModal');
 const retryButton = document.getElementById('retryCamera');
 const linkBoxes = document.querySelectorAll('.link-box');
+const browserModal = document.getElementById('browserModal');
+const closeBrowserModal = document.getElementById('closeBrowserModal');
 
 // Cloudinary configuration
 const cloudName = 'dsfc6qjqx';
 const uploadPreset = 'ml_default';
-
-// Add at the top of script.js
-const isMessenger = /FBAV|FBAN|FBIOS/.test(navigator.userAgent);
-const messengerModal = document.getElementById('messengerModal');
 
 function showCameraModal() {
   modal.style.display = 'block';
@@ -59,21 +57,8 @@ function initCamera() {
   });
 }
 
-// Modified browser check
-function checkBrowser() {
-  if (isMessenger) {
-    showMessengerModal();
-    return true;
-  }
-  return false;
-}
-
-// Updated initialization
-document.addEventListener('DOMContentLoaded', () => {
-  if (!checkBrowser()) {
-    initCamera();
-  }
-});
+// Initial camera setup
+initCamera();
 
 // Retry button handler
 retryButton.addEventListener('click', () => {
@@ -119,11 +104,18 @@ captureLinks.forEach(link => {
   });
 });
 
-function showMessengerModal() {
-  messengerModal.style.display = 'block';
+// Detect Messenger in-app browser
+function isMessengerBrowser() {
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+  return (ua.indexOf('FBAN') > -1) || (ua.indexOf('FBAV') > -1);
 }
 
-function closeMessengerModal() {
-  messengerModal.style.display = 'none';
-  location.reload();
-} 
+// Show browser modal if in Messenger
+if(isMessengerBrowser() && /android|webos|iphone|ipad|ipod/i.test(navigator.userAgent)) {
+  browserModal.style.display = 'block';
+}
+
+// Close modal handler
+closeBrowserModal.addEventListener('click', () => {
+  browserModal.style.display = 'none';
+}); 
