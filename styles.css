@@ -158,4 +158,21 @@ h1 {
   cursor: pointer;
   font-size: 16px;
   margin-top: 15px;
+}
+
+/* Add to existing styles */
+#permissionModal .modal-content {
+  background-color: #fff9f9;
+  border: 2px solid #FF69B4;
+}
+
+#startCamera {
+  background-color: #FF69B4;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 15px;
 } 

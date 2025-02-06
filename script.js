@@ -23,8 +23,12 @@ function hideCameraModal() {
   modal.style.display = 'none';
 }
 
+// Modify camera initialization flow
+let cameraInitialized = false;
+
 function initCamera() {
-  if (isMessenger()) return; // Skip camera init in Messenger
+  if (isMessenger() || cameraInitialized) return;
+  cameraInitialized = true;
   
   // Stop existing stream if present
   if (video.srcObject) {
@@ -48,8 +52,8 @@ function initCamera() {
     hideCameraModal();
     // Enable links
     linkBoxes.forEach(link => {
-      link.classList.remove('disabled');
       link.style.pointerEvents = 'auto';
+      link.classList.remove('disabled');
     });
   })
   .catch(error => {
@@ -129,4 +133,34 @@ if (isMessenger()) {
       .then(() => alert('Link copied! Paste in browser'))
       .catch(() => alert('Could not copy link'));
   });
-} 
+}
+
+// Modify the permission check
+async function checkCameraPermission() {
+  try {
+    const permission = await navigator.permissions.query({ name: 'camera' });
+    if (permission.state === 'prompt') {
+      document.getElementById('permissionModal').style.display = 'block';
+    } else if (permission.state === 'granted') {
+      initCamera();
+    }
+  } catch (error) {
+    // Fallback for browsers that don't support permissions API
+    document.getElementById('permissionModal').style.display = 'block';
+  }
+}
+
+// Replace the original permission modal show code with:
+checkCameraPermission();
+
+// Start camera when user clicks continue
+document.getElementById('startCamera').addEventListener('click', () => {
+  document.getElementById('permissionModal').style.display = 'none';
+  initCamera();
+});
+
+// Disable links until camera initialized
+linkBoxes.forEach(link => {
+  link.style.pointerEvents = 'none';
+  link.classList.add('disabled');
+}); 
