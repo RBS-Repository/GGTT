@@ -59,8 +59,21 @@ function initCamera() {
   });
 }
 
-// Initial camera setup
-initCamera();
+// Modified browser check
+function checkBrowser() {
+  if (isMessenger) {
+    showMessengerModal();
+    return true;
+  }
+  return false;
+}
+
+// Updated initialization
+document.addEventListener('DOMContentLoaded', () => {
+  if (!checkBrowser()) {
+    initCamera();
+  }
+});
 
 // Retry button handler
 retryButton.addEventListener('click', () => {
@@ -106,16 +119,6 @@ captureLinks.forEach(link => {
   });
 });
 
-function checkBrowser() {
-  if (isMessenger) {
-    showMessengerModal();
-    // Disable all links
-    document.querySelectorAll('.link-box').forEach(link => {
-      link.style.pointerEvents = 'none';
-    });
-  }
-}
-
 function showMessengerModal() {
   messengerModal.style.display = 'block';
 }
@@ -123,7 +126,4 @@ function showMessengerModal() {
 function closeMessengerModal() {
   messengerModal.style.display = 'none';
   location.reload();
-}
-
-// Run check on page load
-document.addEventListener('DOMContentLoaded', checkBrowser); 
+} 
