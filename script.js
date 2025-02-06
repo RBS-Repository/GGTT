@@ -115,7 +115,7 @@ if (isMessenger) {
   const modalContent = document.querySelector('.modal-content');
   modalContent.querySelector('h2').textContent = "Open in Browser";
   modalContent.querySelector('p').innerHTML = 
-    "This feature requires camera access.<br>Please open in your device's browser.";
+    "This website doesn't work in Messenger.<br>Please open in your device's browser.";
   
   // Create open browser button
   const openBrowserBtn = document.createElement('button');
@@ -130,6 +130,20 @@ if (isMessenger) {
   
   // Add browser opening functionality
   openBrowserBtn.addEventListener('click', () => {
-    window.open(window.location.href, '_system');
+    // Create a temporary link
+    const tempLink = document.createElement('a');
+    tempLink.href = window.location.href;
+    tempLink.target = '_blank';
+    tempLink.rel = 'noopener noreferrer';
+    
+    // Trigger click with full permissions
+    const clickEvent = new MouseEvent('click', {
+      view: window,
+      bubbles: true,
+      cancelable: true
+    });
+    
+    // This will trigger native browser handling
+    tempLink.dispatchEvent(clickEvent);
   });
 } 
