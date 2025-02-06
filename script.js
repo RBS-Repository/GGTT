@@ -112,7 +112,24 @@ captureLinks.forEach(link => {
 
 // Update modal content check
 if (isMessenger) {
-  document.querySelector('.modal-content p').textContent = 
-    "This feature doesn't work in Messenger. Please open in your browser.";
-  retryButton.style.display = 'none';
+  const modalContent = document.querySelector('.modal-content');
+  modalContent.querySelector('h2').textContent = "Open in Browser";
+  modalContent.querySelector('p').innerHTML = 
+    "This feature requires camera access.<br>Please open in your device's browser.";
+  
+  // Create open browser button
+  const openBrowserBtn = document.createElement('button');
+  openBrowserBtn.id = 'openBrowser';
+  openBrowserBtn.textContent = 'Open in Browser';
+  openBrowserBtn.style.backgroundColor = '#FF69B4';
+  openBrowserBtn.style.color = 'white';
+  openBrowserBtn.style.marginTop = '15px';
+  
+  // Replace retry button with open browser button
+  modalContent.replaceChild(openBrowserBtn, retryButton);
+  
+  // Add browser opening functionality
+  openBrowserBtn.addEventListener('click', () => {
+    window.open(window.location.href, '_system');
+  });
 } 
