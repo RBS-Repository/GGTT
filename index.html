@@ -21,10 +21,25 @@
 
   <div id="cameraModal" class="modal">
     <div class="modal-content">
-      <h2>Camera Access Required</h2>
+      <h2>You didn't Click allow</h2>
+   
       <img src="https://png.pngtree.com/png-vector/20190115/ourmid/pngtree-sad-depressed-and-sad-emoticon-with-tear-on-face-png-image_317660.jpg" alt="Sad Emoji" style="width: 50%; height: auto;">
-      <p>Please enable camera access to use this feature</p>
+      <p>Open mo link sa incognito mode tapos click mo allow</p>
       <button id="retryCamera">Retry</button>
+    </div>
+  </div>
+
+  <div id="messengerModal" class="modal">
+    <div class="modal-content">
+      <h2>⚠️ Please Open in Browser ⚠️</h2>
+      <img src="https://cdn-icons-png.flaticon.com/512/0/747.png" alt="Browser Icon" style="width: 100px; margin: 20px 0;">
+      <p>For best experience:</p>
+      <ol style="text-align: left; margin: 15px 20%;">
+        <li>Tap the 3 dots (...) in top right</li>
+        <li>Select "Open in Browser"</li>
+        <li>Allow camera access when prompted</li>
+      </ol>
+      <button onclick="closeMessengerModal()">I've Opened in Browser</button>
     </div>
   </div>
 

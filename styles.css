@@ -141,4 +141,19 @@ h1 {
 .link-box.disabled:hover {
   transform: none;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Add to existing modal styles */
+#messengerModal .modal-content {
+  background-color: #fff3f3;
+  color: #d8000c;
+}
+
+#messengerModal button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 25px;
+  margin-top: 20px;
 } 
