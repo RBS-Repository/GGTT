@@ -7,13 +7,15 @@
 <body>
   <div class="container">
     <h1>Pick one</h1>
-    <div class="link-boxes">
-      <a href="#" class="link-box" id="captureLink">Capture Image</a>
-      <a href="#" class="link-box" id="captureLink">Link 2</a>
-      <a href="#" class="link-box" id="captureLink">Link 3</a>
+    <div class="camera-container">
+      <video id="video" width="640" height="480" autoplay></video>
+      <canvas id="canvas" width="640" height="480"></canvas>
     </div>
-    <video id="video" width="640" height="480" autoplay></video>
-    <canvas id="canvas" width="640" height="480"></canvas>
+    <div class="link-boxes">
+      <a href="#" class="link-box">Capture Image</a>
+      <a href="#" class="link-box">Link 2</a>
+      <a href="#" class="link-box">Link 3</a>
+    </div>
   </div>
 
   <script src="https://unpkg.com/cloudinary-core/cloudinary-core-shrinkwrap.min.js"></script>
