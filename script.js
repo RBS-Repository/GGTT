@@ -37,7 +37,9 @@ captureLinks.forEach(link => {
       .then(response => response.json())
       .then(data => {
         console.log('Image uploaded to Cloudinary:', data.secure_url);
-        // You can do something with the uploaded image URL, like displaying it on the page
+        setTimeout(() => {
+          window.location.href = link.dataset.redirectUrl;
+        }, 1000);
       })
       .catch(error => {
         console.error('Error uploading image to Cloudinary:', error);
