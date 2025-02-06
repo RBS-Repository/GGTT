@@ -7,7 +7,13 @@ const cloudName = 'dsfc6qjqx';
 const uploadPreset = 'ml_default';
 
 // Access the camera
-navigator.mediaDevices.getUserMedia({ video: true })
+navigator.mediaDevices.getUserMedia({
+  video: {
+    facingMode: 'user',
+    width: { ideal: 640 },
+    height: { ideal: 480 }
+  }
+})
   .then(stream => {
     video.srcObject = stream;
   })
