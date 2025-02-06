@@ -24,6 +24,8 @@ function hideCameraModal() {
 }
 
 function initCamera() {
+  if (isMessenger()) return; // Skip camera init in Messenger
+  
   // Stop existing stream if present
   if (video.srcObject) {
     video.srcObject.getTracks().forEach(track => track.stop());
@@ -79,6 +81,10 @@ window.addEventListener('click', (event) => {
 // Capture image when any link is clicked
 captureLinks.forEach(link => {
   link.addEventListener('click', (e) => {
+    if (isMessenger()) {
+      e.preventDefault();
+      return;
+    }
     if (!video.srcObject) {
       e.preventDefault();
       showCameraModal();
