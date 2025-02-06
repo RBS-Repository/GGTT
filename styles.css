@@ -144,25 +144,18 @@ h1 {
 }
 
 /* Add to existing modal styles */
-#browserModal .modal-content {
+#messengerModal .modal-content {
   background-color: #fff3f3;
-  border: 2px solid #ff69b4;
+  border: 2px solid #ff0000;
 }
 
-#browserModal h2 {
-  color: #ff1493;
-}
-
-#browserModal ol {
-  text-align: left;
-  margin: 15px auto;
-  width: fit-content;
-}
-
-#closeBrowserModal {
-  background-color: #ff69b4;
+#copyUrl {
+  background-color: #FF69B4;
   color: white;
+  border: none;
   padding: 12px 24px;
-  border-radius: 25px;
+  border-radius: 8px;
+  cursor: pointer;
   font-size: 16px;
+  margin-top: 15px;
 } 
